@@ -117,6 +117,24 @@ $conn->close();
 ?>.
 ```
 ---
+## 6. AWS EC2 Deployment Steps
+
+### Step 1: Launch EC2
+Operating System : Ubuntu
+
+Instance Type: t2.micro
+
+Open Ports:
+
+22 (SSH)
+80 (HTTP)
+
+Connect:
+
+```bash
+ssh -i key.pem ec2-user@<EC2_PUBLIC_IP>
+```
+---
 
 ## 6. Docker Configuration  
 
@@ -197,7 +215,7 @@ AmazonS3FullAccess
 
 Attach this role to EC2 instance.
 
-## 6.2 Install AWS SDK (Inside EC2)
+## 7 Install AWS SDK (Inside EC2)
 🗄 Create Table in RDS (Run Once)
 
 Login RDS:
@@ -219,26 +237,7 @@ CREATE TABLE images (
  id INT AUTO_INCREMENT PRIMARY KEY,
  url VARCHAR(255)
 );
-
-## 7. AWS EC2 Deployment Steps
-
-### Step 1: Launch EC2
-Operating System : Ubuntu
-
-Instance Type: t2.micro
-
-Open Ports:
-
-22 (SSH)
-80 (HTTP)
-
-Connect:
-
-```bash
-ssh -i key.pem ec2-user@<EC2_PUBLIC_IP>
-```
 ---
-
 Step 2: Install Docker
 
 ```bash
