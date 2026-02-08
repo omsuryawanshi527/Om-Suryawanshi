@@ -126,9 +126,10 @@ Instance Type: t2.micro
 
 Open Ports:
 
+
 22 (SSH)
 80 (HTTP)
-
+![projjects](https://github.com/user-attachments/assets/b9b41887-8c3e-4004-bfd3-acd59d7633ac)
 Connect:
 
 ```bash
@@ -212,13 +213,16 @@ EC2 → Roles → Create Role
 Attach Policy:
 
 AmazonS3FullAccess  
+![Screenshot 2026-02-08 165828](https://github.com/user-attachments/assets/b3958269-649f-41fe-9fd7-fa995ff084ba)
 
 Attach this role to EC2 instance.
 
 ## 7 Install AWS SDK (Inside EC2)
-🗄 Create Table in RDS (Run Once)
 
-Login RDS:
+## 7.1 Create Table in RDS (Run Once)
+
+Login![Screenshot 2026-02-08 165555](https://github.com/user-attachments/assets/ccd312a1-35d7-4938-bedc-7591bebb4048)
+ RDS:
 
 mysql -h database-1.cbgkwy6wsjei.ap-south-1.rds.amazonaws.com -u admin -p
 
