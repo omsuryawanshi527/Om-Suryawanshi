@@ -61,17 +61,61 @@ task2-docker-app/
 ## 5. PHP Application  
 
 ### index.php  
+```bash
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AWS Image Upload</title>
+</head>
+<body>
 
-Provides upload form.  
+<h2>Upload Image</h2>
 
+<form action="upload.php" method="post" enctype="multipart/form-data">
+    <input type="file" name="image" required>
+    <br><br>
+    <button type="submit">Upload</button>
+
+</form>
+
+</body>
+</html>
+```
 ### upload.php  
+```bash
+<?php
 
-Uploads image to S3 and stores URL in database.  
+require '../vendor/autoload.php';
+include 'db.php';
 
-### db.php  
+use Aws\S3\S3Client;
 
-Handles database connection.  
+$s3 = new S3Client([
+    'region' => 'ap-south-1',
+    'version' => 'latest'
+]);
 
+$fileTmp = $_FILES['image']['tmp_name'];
+$fileName = $_FILES['image']['name'];
+
+$result = $s3->putObject([
+    'Bucket' => 'my-image-project-123',
+    'Key' => $fileName,
+    'SourceFile' => $fileTmp,
+    'ACL' => 'public-read'
+]);
+
+$imageUrl = $result['ObjectURL'];
+
+$conn->query("INSERT INTO images(url) VALUES('$imageUrl')");
+
+echo "Image Uploaded Successfully<br><br>";
+echo "<img src='$imageUrl' width='250'>";
+
+$conn->close();
+
+?>.
+```
 ---
 
 ## 6. Docker Configuration  
@@ -154,6 +198,27 @@ AmazonS3FullAccess
 Attach this role to EC2 instance.
 
 ## 6.2 Install AWS SDK (Inside EC2)
+🗄 Create Table in RDS (Run Once)
+
+Login RDS:
+
+mysql -h database-1.cbgkwy6wsjei.ap-south-1.rds.amazonaws.com -u admin -p
+
+
+Password:
+
+admin123
+
+
+Then:
+
+CREATE DATABASE imagedb;
+USE imagedb;
+
+CREATE TABLE images (
+ id INT AUTO_INCREMENT PRIMARY KEY,
+ url VARCHAR(255)
+);
 
 ## 7. AWS EC2 Deployment Steps
 
@@ -257,13 +322,18 @@ Stop EC2 when idle
 
 ### 12. Troubleshooting
 App not accessible
+
 docker ps
+
 Check Security Group port 80.
 
 
 Container running but port unreachable
+
 docker inspect php_web
+
 ALB health check failing
+
 docker logs php_web
 
 ### 13. Assumptions
