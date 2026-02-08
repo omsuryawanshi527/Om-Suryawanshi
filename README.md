@@ -232,11 +232,13 @@ Then:
 
 CREATE DATABASE imagedb;
 USE imagedb;
-
-CREATE TABLE images (
- id INT AUTO_INCREMENT PRIMARY KEY,
- url VARCHAR(255)
+```bash
+CREATE TABLE images(
+id INT AUTO_INCREMENT PRIMARY KEY,
+url VARCHAR(255)
 );
+```
+
 ---
 Step 2: Install Docker
 
