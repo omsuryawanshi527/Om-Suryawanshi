@@ -122,6 +122,39 @@ services:
 ```
 ---
 
+## 6.1 Amazon S3 Setup
+
+1. Go to AWS Console → S3 → Create Bucket
+2. Bucket Name: om-image-upload-demo
+3. Region: same as EC2
+4. Disable "Block all public access"
+5. Create bucket
+
+### Bucket Policy (Public Read)
+```bash
+```json
+{
+ "Version": "2012-10-17",
+ "Statement": [
+  {
+   "Effect": "Allow",
+   "Principal": "*",
+   "Action": "s3:GetObject",
+   "Resource": "arn:aws:s3:::om-image-upload-demo/*"
+  }
+ ]
+}
+```
+And After — Attach IAM Role to EC2
+EC2 → Roles → Create Role  
+Attach Policy:
+
+AmazonS3FullAccess  
+
+Attach this role to EC2 instance.
+
+## 6.2 Install AWS SDK (Inside EC2)
+
 ## 7. AWS EC2 Deployment Steps
 
 ### Step 1: Launch EC2
